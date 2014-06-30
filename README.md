@@ -60,12 +60,12 @@ case class Matrix(data: CLArray[Float], rows: Int, columns: Int)(implicit contex
     
     kernel {
       // This block will either be converted to an OpenCL kernel or cause compilation error
-  for (i <- 0 until rows; j <- 0 until columns) {
-    data(i * columns + j) = (0 until a.columns).map(k => {
-      a.data(i * a.columns + k) * b.data(k * b.columns + j)
-    }).sum
-  }
-  }
+      for (i <- 0 until rows; j <- 0 until columns) {
+        data(i * columns + j) = (0 until a.columns).map(k => {
+          a.data(i * a.columns + k) * b.data(k * b.columns + j)
+        }).sum
+      }
+    }
   }
   
   def putSum(a: Matrix, b: Matrix): Unit = {
@@ -75,9 +75,9 @@ case class Matrix(data: CLArray[Float], rows: Int, columns: Int)(implicit contex
     kernel {
       for (i <- 0 until rows; j <- 0 until columns) {
       	val offset = i * columns + j
-    data(offset) = a.data(offset) + b.data(offset)
-  }
-  }
+        data(offset) = a.data(offset) + b.data(offset)
+      }
+    }
   }
 }
         
